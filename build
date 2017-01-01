@@ -1,0 +1,6 @@
+# hastec --opt-all --opt-minify main
+hastec --verbose main
+# hastec --verbose --debug main
+# hastec main
+sed -i -e "s/err())/err()/" main.js
+echo "Done!"

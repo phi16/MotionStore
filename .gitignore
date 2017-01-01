@@ -1,0 +1,8 @@
+*.o
+*.hi
+*.jsmod
+
+# for generate documentation
+genDoc
+doc/Haste/
+doc/Haste.hs
