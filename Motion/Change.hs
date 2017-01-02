@@ -20,12 +20,17 @@ changeMot c = do
           e' <- io $ valueIO $ morph e
           when (e' == Just True) $ fill c $ centerRect (po x,po y) (100,100)
     handler = forever $ do
-      forM_ bs $ \b -> do
-        n <- io randomIO
-        b ==> n
-      s ==> 1.5
-      s ~~> 1
+      let
+        shuffle = do
+          forM_ bs $ \b -> do
+            n <- io randomIO
+            b ==> n
+          s ==> 1.5
+          s ~~> 1
+      replicateM 4 $ shuffle >> sleep 15
+      shuffle
       sleep 50
-      return ()
+      shuffle
+      sleep 100
   newMVar 0
   return (render,handler)
