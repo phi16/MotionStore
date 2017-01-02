@@ -10,7 +10,7 @@ import System.Random
 
 changeMot :: Color -> World (Render (), World ())
 changeMot c = do
-  bs <- replicateM 9 $ immediate True
+  bs <- replicateM 10 $ immediate True
   s <- ease 1 10 $ easeOut . expo
   let
     pos = zip bs [ (x*100,y*100) | x<-[-1..1], y<-[-1..1] ]
@@ -32,5 +32,4 @@ changeMot c = do
       sleep 50
       shuffle
       sleep 100
-  newMVar 0
   return (render,handler)

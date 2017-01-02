@@ -17,6 +17,7 @@ import Motion.Bounce
 import Motion.Grow
 import Motion.Speed
 import Motion.Change
+import Motion.Trot
 
 type Views = [View FocusEvent]
 
@@ -35,7 +36,8 @@ launch cvs = do
   v2 <- consView (0.3,0.8,0,1) growMot "Grow" "No description"
   v3 <- consView (1.0,0.2,0,1) speedMot "Speed" "No description"
   v4 <- consView (0.1,0.8,0.8,1) changeMot "Change" "No description"
-  let views = [v1,v2,v3,v4]
+  v5 <- consView (1,0.5,0,1) trotMot "Trot" "No description"
+  let views = [v1,v2,v3,v4,v5]
   let height = pad + fromIntegral (length views) * (size + pad)
   setProp (elemOf cvs) "height" $ show height
   state <- makeMVar views
