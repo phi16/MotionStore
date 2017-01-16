@@ -18,6 +18,8 @@ import Motion.Grow
 import Motion.Speed
 import Motion.Change
 import Motion.Trot
+import Motion.Resist
+import Motion.Info
 
 type Views = [View FocusEvent]
 
@@ -37,7 +39,9 @@ launch cvs = do
   v3 <- consView (1.0,0.2,0,1) speedMot "Speed" "Uniform Distr & Exponential Distr"
   v4 <- consView (0.1,0.8,0.8,1) changeMot "Change" "easeOutExpo"
   v5 <- consView (1,0.5,0,1) trotMot "Trot" "rotateAt corner easeInCubic & smoothStep scroll"
-  let views = [v1,v2,v3,v4,v5]
+  v6 <- consView (1,0,0.3,1) resistMot "Resist" "easeOutExpo & Randomness & Vel/Acc model"
+  v7 <- consView (0.5,0.8,0.9,1) infoMot "Info" "easeOutBack & Cubic-Quad difference"
+  let views = [v1,v2,v3,v4,v5,v6,v7]
   let height = pad + fromIntegral (length views) * (size + pad)
   setProp (elemOf cvs) "height" $ show height
   state <- makeMVar views

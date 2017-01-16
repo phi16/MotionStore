@@ -94,6 +94,7 @@ easeHandle :: Morph a => Ease a  -- ^ Easingオブジェクト
            -> (Bool -> World ()) -- ^ ハンドラ。引数は「正常終了なら'True'」です。
            -> World ()
 easeHandle (Ease dur easing e) v act = do
+  (!_,(!_,!_,!_,!_)) <- liftW $ readMVar e
   let
     from = _2._1
     to = _2._2
