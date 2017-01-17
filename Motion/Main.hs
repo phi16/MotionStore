@@ -20,6 +20,7 @@ import Motion.Change
 import Motion.Trot
 import Motion.Resist
 import Motion.Info
+import Motion.Collide
 
 type Views = [View FocusEvent]
 
@@ -34,14 +35,15 @@ sz = po size
 
 launch :: Canvas -> World ()
 launch cvs = do
-  v1 <- consView (0,0.3,1,1) bounceMot "Bounce" "Velocity & Acceleration"
-  v2 <- consView (0.3,0.8,0,1) growMot "Grow" "Sequential easeOutBack"
+  v1 <- consView (0,0.3,0.9,1) bounceMot "Bounce" "Velocity & Acceleration"
+  v2 <- consView (0.4,0.8,0,1) growMot "Grow" "Sequential easeOutBack"
   v3 <- consView (1.0,0.2,0,1) speedMot "Speed" "Uniform Distr & Exponential Distr"
   v4 <- consView (0.1,0.8,0.8,1) changeMot "Change" "easeOutExpo"
   v5 <- consView (1,0.5,0,1) trotMot "Trot" "rotateAt corner easeInCubic & smoothStep scroll"
   v6 <- consView (1,0,0.3,1) resistMot "Resist" "easeOutExpo & Randomness & Vel/Acc model"
-  v7 <- consView (0.5,0.8,0.9,1) infoMot "Info" "easeOutBack & Cubic-Quad difference"
-  let views = [v1,v2,v3,v4,v5,v6,v7]
+  v7 <- consView (0.5,0.8,0.9,1) infoMot "Info" "easeInCubic → easeOutCubic & Cubic-Quad difference"
+  v8 <- consView (1,0.8,0,1) collideMot "Collide" "easeOutCubic → easeInQuad → easeOutExpo"
+  let views = [v1,v2,v3,v4,v5,v6,v7,v8]
   let height = pad + fromIntegral (length views) * (size + pad)
   setProp (elemOf cvs) "height" $ show height
   state <- makeMVar views

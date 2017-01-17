@@ -10,9 +10,9 @@ import System.Random
 
 infoMot :: Color -> World (Render (), World ())
 infoMot c = do
-  s <- ease 1 20 $ easeOut . back
-  fis <- forM [0..2] $ \i -> ease 1 20 $ sequent i 3 0.6 . easeOut . quad
-  fos <- forM [0..2] $ \i -> ease 1 20 $ sequent i 3 0.6 . easeOut . cubic
+  s <- ease 1 40 $ easeOut . cubic
+  fis <- forM [0..2] $ \i -> ease 1 30 $ sequent i 3 0.6 . easeOut . quad
+  fos <- forM [0..2] $ \i -> ease 1 30 $ sequent i 3 0.6 . easeOut . cubic
   let
     fs = zip fis fos
     drawFrame i o = do
@@ -29,13 +29,16 @@ infoMot c = do
         scale (morph s,morph s) $ fill c $ centerRect (0,0) (80,80)
     handler = do
       forever $ do
-        sleep 40
-        s ==> 1.2
+        sleep 30
+        (easing .~ easeIn . cubic $ duration .~ 10 $ s) ~~> 1.2
+        sleep 10
         iforM_ fs $ \p (i,o) -> do
           let t = 1.8 - fromIntegral p / 2 * 0.4
           i ==> 1
           o ==> 1
           i ~~> t
           o ~~> t
+        s ==> 1.2
         s ~~>! 1
+        s ==> 1
   return (render,handler)
